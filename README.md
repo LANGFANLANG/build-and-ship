@@ -11,7 +11,8 @@ Build-and-Ship 是一套面向 Coding Agent 的端到端软件开发 Skill。它
 
 ## 适合谁
 
-- 新手开发者：不知道如何从一个想法开始做完整程序。
+- AI coding 新手：只有一个产品想法，也希望在 Agent 帮助下做出一个能运行的程序。
+- 新手开发者：不知道如何写 PRD、选技术栈、搭项目结构、配置环境、测试和交付。
 - 使用 Codex、Claude Code、Cursor、OpenCode、Gemini CLI 等 Coding Agent 的用户。
 - 希望 Agent 不只是写代码，还能主动做需求确认、环境诊断、测试、运行验证和交付报告的用户。
 
@@ -108,17 +109,30 @@ C:\Users\<你的用户名>\.codex\skills\build-and-ship
 
 Build-and-Ship 的流程设计是平台无关的，但自动发现机制主要兼容 Codex 的 `.agents/skills` 结构。
 
+仓库提供了适配模板：
+
+```text
+adapters/
+├── AGENTS.md
+├── CLAUDE.md
+├── GEMINI.md
+├── CURSOR.md
+├── OPENCODE.md
+└── .cursorrules
+```
+
 其他 Agent 可以这样使用：
 
 | Agent | 推荐方式 |
 |---|---|
-| Claude Code | 把 `SKILL.md` 核心规则复制到 `CLAUDE.md`，或放入 Claude 支持的 skill/instructions 目录 |
-| Cursor | 把核心流程复制到 `.cursorrules` 或项目规则文件 |
-| OpenCode | 放入 OpenCode 的 agent instructions / skill 目录 |
-| Gemini CLI | 把核心规则复制到 `GEMINI.md` |
+| Claude Code | 复制 `adapters/CLAUDE.md` 到目标项目根目录 |
+| Cursor | 复制 `adapters/.cursorrules` 或 `adapters/CURSOR.md` 到目标项目规则 |
+| OpenCode | 复制 `adapters/OPENCODE.md` 到 OpenCode 的 agent instructions |
+| Gemini CLI | 复制 `adapters/GEMINI.md` 到目标项目根目录 |
+| 通用 Agent | 复制 `adapters/AGENTS.md` 到目标项目根目录 |
 | 其他 Agent | 复制 `SKILL.md` + 需要的 `references/` 内容到对应的系统提示或项目说明 |
 
-脚本目前是 PowerShell 版本，更适合 Windows。Linux/macOS 用户可以让 Agent 按 `SKILL.md` 中的规则执行等价命令，后续可以补充 Bash 或 Python 脚本。
+脚本提供 PowerShell 和 Python 两套入口。PowerShell 适合 Windows，Python 适合 Windows/macOS/Linux。
 
 ## 新手示例
 
@@ -204,6 +218,14 @@ powershell -ExecutionPolicy Bypass -File .agents\skills\build-and-ship\scripts\w
 powershell -ExecutionPolicy Bypass -File .agents\skills\build-and-ship\scripts\collect_evidence.ps1
 ```
 
+跨平台 Python 入口：
+
+```bash
+python .agents/skills/build-and-ship/scripts/detect_project.py
+python .agents/skills/build-and-ship/scripts/detect_environment.py --ports 5173,8080
+python .agents/skills/build-and-ship/scripts/wait_for_http.py http://localhost:5173
+```
+
 ## 最终交付报告应包含
 
 ```text
@@ -223,11 +245,12 @@ Next recommended step
 - Skill 结构已创建。
 - Codex `quick_validate.py` 校验通过。
 - PowerShell 环境检测脚本已验证可运行。
+- Python 跨平台检测脚本已补充。
+- 已提供 Claude Code、Cursor、Gemini CLI、OpenCode 和通用 Agent 适配模板。
 - 已做过一轮子代理压力测试，确认 Skill 会引导 PRD、技术栈、MVP、环境诊断和交付说明。
 
 ## 后续建议
 
-- 增加 Bash / Python 版脚本，提升 macOS 和 Linux 兼容性。
-- 增加 `CLAUDE.md`、`GEMINI.md`、`.cursorrules` 等适配模板。
+- 增加 Bash 版脚本，进一步提升 macOS 和 Linux 体验。
 - 增加几个完整示例项目路线，例如纯前端待办、Spring Boot CRUD、FastAPI API。
 - 将 Skill 复制到全局 `.codex/skills` 后进行真实项目试用。

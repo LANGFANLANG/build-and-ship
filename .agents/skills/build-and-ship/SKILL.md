@@ -57,12 +57,12 @@ Use bundled scripts when deterministic checks are useful:
 
 | Need | Script |
 |---|---|
-| Detect current project type | `scripts/detect_project.ps1` |
-| Detect installed runtimes and ports | `scripts/detect_environment.ps1` |
-| Wait for HTTP readiness | `scripts/wait_for_http.ps1` |
+| Detect current project type | `scripts/detect_project.ps1` or `scripts/detect_project.py` |
+| Detect installed runtimes and ports | `scripts/detect_environment.ps1` or `scripts/detect_environment.py` |
+| Wait for HTTP readiness | `scripts/wait_for_http.ps1` or `scripts/wait_for_http.py` |
 | Save a lightweight evidence report | `scripts/collect_evidence.ps1` |
 
-If PowerShell is unavailable, perform equivalent shell-native checks. If Python is missing, report it through the environment diagnostic rather than blocking unrelated work.
+Use PowerShell scripts on Windows when convenient. Use Python scripts for cross-platform macOS/Linux/Windows checks. If neither runtime is available, perform equivalent shell-native checks and report missing tooling through the environment diagnostic rather than blocking unrelated work.
 
 ## Confirmation Rules
 

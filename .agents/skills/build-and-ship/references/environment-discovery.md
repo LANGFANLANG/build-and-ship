@@ -19,6 +19,8 @@ Database clients
 Ports
 ```
 
+Bundled checks should cover `pip`, `uv`, Docker Compose, MySQL client, PostgreSQL client, Redis CLI, MongoDB shell, and requested ports when the runtime allows it.
+
 ## Diagnostic Report
 
 When something is missing, output:

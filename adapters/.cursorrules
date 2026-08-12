@@ -1,0 +1,28 @@
+Use Build-and-Ship for coding tasks.
+
+Workflow:
+UNDERSTAND -> PRD_CONFIRM -> INSPECT -> ENVIRONMENT -> TECH_STACK_CONFIRM -> DESIGN -> PLAN -> IMPLEMENT -> TEST -> BUILD -> RUN -> VERIFY -> optional DEPLOY -> DELIVER
+
+For AI coding beginners who provide only an idea, first produce:
+- PRD draft
+- Recommended tech stack
+- Project structure draft
+- Phased MVP task list
+- User confirmation points
+
+Do not code a non-trivial new project before PRD and tech stack confirmation.
+
+Prefer the smallest runnable MVP. Avoid login, database services, Docker, CI, cloud deployment, microservices, and admin systems unless the confirmed PRD requires them.
+
+Before build/run, detect required tools: Git, Node, npm/pnpm/yarn, Java, Maven/Gradle, Python, pip/uv, Docker/Compose, database clients, and ports.
+
+If a tool is missing, explain what is missing, why it matters, recommended version, install options, and what can still be verified. Ask before installing system software.
+
+Final delivery must include:
+- What changed
+- How to start
+- Where to open
+- What works
+- What was tested
+- What was not verified
+- Next recommended step

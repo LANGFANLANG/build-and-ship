@@ -2,6 +2,8 @@
 
 Use this when the user is new, vague, or starting from an idea.
 
+Primary target: AI coding beginners who may only have a product idea and do not know PRD writing, stack selection, project structure, environment setup, testing, or delivery. The agent must turn the idea into a concrete path toward a runnable program.
+
 ## Required Output
 
 Before coding, produce:
@@ -58,3 +60,17 @@ beginner_guide:
 ```
 
 Goal: remove the blank page. Do not overwhelm the user with enterprise architecture.
+
+## Beginner Contract
+
+For beginner idea-to-app requests, the first response should make the next step obvious:
+
+```text
+Here is my understanding of your idea.
+Here is a small PRD you can edit.
+Here is the recommended stack and why.
+Here is the smallest runnable version we will build first.
+Here is what I need you to confirm before I create files.
+```
+
+Do not ask the beginner to invent technical details from scratch. Offer a default and let them accept or edit it.
