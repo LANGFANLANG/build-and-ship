@@ -6,7 +6,7 @@ Build-and-Ship 是一套面向 Coding Agent 的端到端软件开发 Skill。它
 
 ```text
 代码写完不等于任务完成。
-任务完成 = 需求确认 + 技术栈确认 + 实现 + 测试 + 构建 + 运行 + 验证 + 明确交付。
+任务完成 = 需求确认 + 技术栈确认 + 架构审查通过 + 实现 + 测试 + 构建 + 运行 + 验证 + 明确交付。
 ```
 
 ## 适合谁
@@ -33,21 +33,24 @@ G2  PRD_CONFIRM
 G3  INSPECT
 G4  ENVIRONMENT
 G5  TECH_STACK_CONFIRM
-G6  DESIGN
-G7  PLAN
-G8  IMPLEMENT
-G9  TEST
-G10 BUILD
-G11 RUN
-G12 VERIFY
-G13 DEPLOY optional
-G14 DELIVER
+G6  ARCHITECTURE_DESIGN
+G7  ARCHITECTURE_REVIEW
+G8  PLAN
+G9  IMPLEMENT
+G10 TEST
+G11 BUILD
+G12 RUN
+G13 VERIFY
+G14 DEPLOY optional
+G15 DELIVER
 ```
 
 其中：
 
 - `PRD_CONFIRM`：用户确认需求文档，不合适可以手动修改。
 - `TECH_STACK_CONFIRM`：用户确认技术栈，也可以使用推荐默认技术栈。
+- `ARCHITECTURE_DESIGN`：对非平凡项目或架构变更生成 `docs/architecture/YYYY-MM-DD-<topic>.md`，比较 2–3 个成熟方案并给出推荐。
+- `ARCHITECTURE_REVIEW`：文档交给用户审查；用户明确批准前不得进入计划和开发。按钮颜色、文案等局部改动可标记 `DESIGN_NA`。
 - `ENVIRONMENT`：检查本机是否有 Java、Python、Node、Docker 等必要环境。
 - `DELIVER`：最终必须给出具体交付说明，而不是一句“完成了”。
 
@@ -66,6 +69,7 @@ G14 DELIVER
         │   ├── project-discovery.md
         │   ├── environment-discovery.md
         │   ├── tech-stack-and-patterns.md
+        │   ├── architecture-design.md
         │   ├── mvp-planning.md
         │   ├── verification-and-delivery.md
         │   └── docker.md

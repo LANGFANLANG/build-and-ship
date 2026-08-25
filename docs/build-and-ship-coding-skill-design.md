@@ -43,7 +43,9 @@ PRD 确认
       ↓
 技术栈确认
       ↓
-方案设计
+架构方案设计与 Markdown 输出
+      ↓
+用户架构审查与批准
       ↓
 任务拆分
       ↓
@@ -834,7 +836,7 @@ PARTIALLY_VERIFIED
 
 ---
 
-# 10. 阶段四：方案设计 Design
+# 10. 阶段四：架构方案设计与审查 Architecture Design and Review
 
 ## 10.1 新项目
 
@@ -931,7 +933,7 @@ Agent 输出推荐技术栈
       ↓
 用户选择确认、修改或使用默认推荐
       ↓
-TECH_STACK_CONFIRMED 后进入详细设计和实现
+TECH_STACK_CONFIRMED 后进入架构设计；技术栈确认不等于架构批准
 ```
 
 如果用户明确表示“默认就行”“用你推荐的”，则可以继续使用推荐技术栈，并记录为：
@@ -997,6 +999,49 @@ FastAPI + SQLite / PostgreSQL，适合 Python API、AI 工具、轻量服务。
 ```
 
 新手默认优先选择最轻量、依赖最少、最快能跑起来的范式。
+
+## 10.5 架构 Markdown 与审查门槛
+
+新项目，以及会改变主要模块、服务边界、公共 API、数据模型、认证授权、外部集成、部署拓扑、迁移方案或跨领域质量属性的工作，必须生成：
+
+```text
+docs/architecture/YYYY-MM-DD-<topic>.md
+```
+
+架构阶段使用独立状态：
+
+```text
+DESIGN_REQUIRED
+      ↓
+生成架构 Markdown
+      ↓
+DESIGN_IN_REVIEW
+      ↓
+用户阅读、编辑并明确批准
+      ↓
+DESIGN_APPROVED
+      ↓
+PLAN → IMPLEMENT
+```
+
+文档至少按适用性覆盖：目标和非目标、现有系统、约束、2–3 个候选方案、推荐决策、组件边界、数据与接口、安全、可靠性、迁移、回滚、部署、验证策略、风险与开放问题。
+
+候选方案应优先来自成熟且常用的设计：
+
+```text
+应用结构：简单分层 / 模块化单体 / 局部六边形或整洁架构 / 微服务
+Web：SPA + API / 服务端渲染全栈 / BFF
+数据：关系数据库 / 文档数据库 / 缓存 / Transactional Outbox
+集成：同步 REST / 进程内领域事件 / 异步队列 / Outbox + Broker
+身份：安全 Cookie Session / OIDC-OAuth / 有明确生命周期的 Token
+部署：单体或托管平台 / Container-Compose / 有充分依据时的编排平台
+```
+
+每次只比较最相关的 2–3 个候选，并推荐满足当前需求的最简单成熟方案。普通新业务系统默认优先模块化单体与关系数据库，不为“未来可能扩展”自动引入微服务、消息队列、缓存、搜索引擎或 Kubernetes。
+
+PRD 或技术栈确认不等于架构批准。“使用默认方案”“不要问”“直接开发”等在文档产生前给出的指令不能批准一份用户尚未看到的架构文档。Agent 交付文档后必须停止，不得提前规划实现任务或修改生产代码。
+
+文案、样式、局部 Bug 修复等不产生架构决策的改动可以标记 `DESIGN_NA`，并简要说明原因。实施中若服务边界、公共接口、数据所有权、安全边界、主要依赖、部署、迁移或回滚方案发生实质变化，必须更新架构文档并重新进入审查。
 
 ---
 
@@ -1845,6 +1890,8 @@ STACK_CONFIRMING
    ↓
 DESIGNING
    ↓
+DESIGN_IN_REVIEW
+   ↓
 PLANNING
    ↓
 IMPLEMENTING
@@ -1951,6 +1998,7 @@ PRD Confirmation       PASS / N/A
 Project Understanding  PASS
 Environment            PASS / PARTIAL
 Tech Stack             PASS / EXISTING
+Architecture           APPROVED / N/A
 Implementation         PASS
 Test                   PASS
 Build                  PASS
@@ -2279,6 +2327,8 @@ Environment Diagnostic Report
 
 Architecture Design
 
+Architecture Review Gate
+
 Tech Stack Confirmation
 
 Standard Project Patterns
@@ -2426,15 +2476,16 @@ G2  PRD_CONFIRM
 G3  INSPECT
 G4  ENVIRONMENT
 G5  TECH_STACK_CONFIRM
-G6  DESIGN
-G7  PLAN
-G8  IMPLEMENT
-G9  TEST
-G10 BUILD
-G11 RUN
-G12 VERIFY
-G13 DEPLOY (OPTIONAL)
-G14 DELIVER
+G6  ARCHITECTURE_DESIGN
+G7  ARCHITECTURE_REVIEW
+G8  PLAN
+G9  IMPLEMENT
+G10 TEST
+G11 BUILD
+G12 RUN
+G13 VERIFY
+G14 DEPLOY (OPTIONAL)
+G15 DELIVER
 ```
 
 其中：
